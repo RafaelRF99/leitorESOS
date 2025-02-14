@@ -1,0 +1,1 @@
+# Leitor ES/OS em Python
