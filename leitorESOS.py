@@ -37,7 +37,21 @@ def buscar_dados(codigo):
 
 # Função para exibir os dados corretamente formatados
 def on_enter(event=None):
-    codigo = entry_codigo.get()
+    codigo = entry_codigo.get().strip()
+
+    # Força o fechamento da aplicação
+    if codigo.lower() == 'exit':
+        root.destroy()
+        return
+
+    # Se o usuário digitou "help", exibe as informações de contato
+    if codigo.lower() == "help":
+        texto_resultado.delete(1.0, tk.END)
+        texto_resultado.insert(tk.END, "Criado e desenvolvido por: Rafael Ferreira\n")
+        texto_resultado.insert(tk.END, "LinkedIn: https://www.linkedin.com/in/rafael-ferreira99/\n")
+        texto_resultado.insert(tk.END, "WhatsApp: (19) 998255728\n")
+        return
+
     if len(codigo) == 11:
         resultados = buscar_dados(codigo)
 
@@ -62,8 +76,16 @@ def on_enter(event=None):
 
 # Função para limitar a entrada de texto, reiniciar ao ultrapassar 11 caracteres e corrigir "2" para "1" na posição 11
 def limitar_entrada(event):
-    codigo = entry_codigo.get()
+    codigo = entry_codigo.get().strip()
     
+    if codigo.lower() == "exit":
+        on_enter()
+        return
+
+    if codigo.lower() == "help":
+        on_enter()
+        return
+
     if len(codigo) > 11:
         # Guarda o último caractere digitado
         ultimo_caractere = codigo[-1]
@@ -87,7 +109,7 @@ root.title("Busca no Excel")
 root.geometry("700x500")
 
 # Caixa de entrada
-tk.Label(root, text="Digite o código (11 caracteres):").pack(pady=10)
+tk.Label(root, text="Digite o código (11 caracteres) ou 'help':").pack(pady=10)
 entry_codigo = tk.Entry(root, font=("Arial", 14), width=20)
 entry_codigo.pack(pady=10)
 entry_codigo.focus()
@@ -97,5 +119,8 @@ entry_codigo.bind("<KeyRelease>", limitar_entrada)
 # Área de texto para exibir o resultado
 texto_resultado = tk.Text(root, font=("Courier", 12), width=70, height=15)  # Usar fonte monoespaçada melhora alinhamento
 texto_resultado.pack(pady=20)
+
+rodape = tk.Label(root, text="Caso dificuldade, digitar 'help'", font=("Arial", 10), anchor="center")
+rodape.pack(side=tk.BOTTOM, fill="x", padx=20)
 
 root.mainloop()
