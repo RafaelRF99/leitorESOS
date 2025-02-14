@@ -60,7 +60,7 @@ def on_enter(event=None):
             texto_resultado.delete(1.0, tk.END)
             texto_resultado.insert(tk.END, "Código não encontrado.")
 
-# Função para limitar a entrada de texto e reiniciar automaticamente ao ultrapassar 11 caracteres
+# Função para limitar a entrada de texto, reiniciar ao ultrapassar 11 caracteres e corrigir "2" para "1" na posição 11
 def limitar_entrada(event):
     codigo = entry_codigo.get()
     
@@ -71,7 +71,14 @@ def limitar_entrada(event):
         entry_codigo.delete(0, tk.END)
         entry_codigo.insert(0, ultimo_caractere)
     
+    # Se o usuário digitou 11 caracteres
     if len(codigo) == 11:
+        # Verifica se o 11º caractere é "2"
+        if codigo[10] == "2":
+            codigo = codigo[:10] + "1"  # Substitui "2" por "1" na posição 11
+            entry_codigo.delete(0, tk.END)
+            entry_codigo.insert(0, codigo)
+
         on_enter()
 
 # Configuração da interface gráfica
