@@ -5,7 +5,7 @@ a = Analysis(
     ['leitorESOS.py'],
     pathex=[],
     binaries=[],
-    datas=[('leitorESOS.xlsx', '.')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
