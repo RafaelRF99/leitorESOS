@@ -6,6 +6,9 @@ import cv2
 import numpy as np
 import os
 
+trocar_camera = 0
+maximo_camera = 2
+
 # Variável global para armazenar os dados da planilha
 dados_indexados = {}
 
@@ -83,10 +86,17 @@ def limitar_entrada(event):
     # Removemos as validações de limite de caracteres (não há limite agora)
     on_enter()
 
+def trocar_camera_utilizada():
+    global trocar_camera
+    trocar_camera += 1
+    if trocar_camera == maximo_camera:
+        trocar_camera = 0
+
+
 # Função para capturar o número da câmera e preencher no campo de entrada
 def capturar_numero_da_camera():
     # Abertura da câmera com índice 1 (ajustado conforme seu dispositivo)
-    cap = cv2.VideoCapture(1)  # Altere para o índice correto da sua câmera Trust USB
+    cap = cv2.VideoCapture(trocar_camera)  # Altere para o índice correto da sua câmera Trust USB
 
     if not cap.isOpened():
         messagebox.showerror("Erro", "Câmera não encontrada!")
@@ -146,6 +156,9 @@ texto_resultado.pack(pady=20)
 # Botão para capturar o número da câmera
 botao_camera = tk.Button(root, text="Capturar Número da Câmera", font=("Arial", 14), command=capturar_numero_da_camera)
 botao_camera.pack(pady=20)
+
+troca_camera = tk.Button(root, text="Trocar câmera", font=("Arial", 14), command=trocar_camera_utilizada)
+troca_camera.pack(pady=20)
 
 # Carregar os dados na inicialização
 carregar_dados()

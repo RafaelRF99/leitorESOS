@@ -3,4 +3,4 @@
 ## Gerar executável
 Instalar: pyinstaller
 
-pyinstaller --onefile --windowed --icon=icon.ico --add-data "leitorESOS.xlsx;." leitorESOS.py
+pyinstaller --onefile --windowed --icon=icon.ico leitorESOS.py
